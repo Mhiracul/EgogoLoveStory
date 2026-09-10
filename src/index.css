@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", serif;
+  --font-body: "DM Sans", sans-serif;
+
+  /* Wedding palette */
+  --color-ivory: #faf7f0;
+  --color-cream: #f4ede1;
+  --color-champagne: #d6b77a;
+  --color-gold: #b89045;
+  --color-brown: #3a2922;
+  --color-burgundy: #70263a;
+  --color-blush: #d9b8b8;
+  --color-dusty-rose: #c99598;
+  --color-coral: #e47b68;
+  --color-nude: #e8d4c3;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #faf7f0;
+  color: #3a2922;
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #d6b77a;
+  color: white;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+}
