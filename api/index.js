@@ -1,15 +1,9 @@
 import app from "../server/app.js";
 import connectDB from "../server/config/db.js";
 
-let dbConnected = false;
-
 export default async function handler(req, res) {
   try {
-    if (!dbConnected) {
-      await connectDB();
-      dbConnected = true;
-    }
-
+    await connectDB();
     return app(req, res);
   } catch (error) {
     console.error("API error:", error);

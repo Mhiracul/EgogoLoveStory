@@ -22,6 +22,12 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/api", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Miracle & Steve Wedding API is running ❤️",
+  });
+});
 app.use("/api/auth", authRoutes);
 app.use("/api/rsvp", rsvpRoutes);
 app.use("/api/asoebi", asoebiRoutes);
