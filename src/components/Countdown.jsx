@@ -11,7 +11,7 @@ export default function Countdown() {
   useEffect(() => {
     // TEMPORARY DATE
     // Replace this when the actual wedding date is confirmed.
-    const weddingDate = new Date("2026-12-19T10:00:00");
+    const weddingDate = new Date("2027-04-01T10:00:00");
 
     const update = () => {
       const difference = weddingDate - new Date();
