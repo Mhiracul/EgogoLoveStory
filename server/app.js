@@ -3,6 +3,7 @@ import cors from "cors";
 import rsvpRoutes from "./routes/rsvpRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import asoebiRoutes from "./routes/asoebiRoutes.js";
+import giftRoutes from "./routes/giftRoutes.js";
 
 const app = express();
 
@@ -31,5 +32,6 @@ app.get("/api", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/rsvp", rsvpRoutes);
 app.use("/api/asoebi", asoebiRoutes);
+app.use("/api/gifts", giftRoutes);
 
 export default app;

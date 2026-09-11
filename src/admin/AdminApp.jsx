@@ -5,6 +5,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import RSVPs from "./pages/RSVPs";
 import AdminLogin from "./pages/AdminLogin";
 import AsoebiOrders from "./pages/AsoebiOrders";
+import Gifts from "./pages/Gifts";
 
 export default function AdminApp() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -35,6 +36,9 @@ export default function AdminApp() {
 
     if (path.startsWith("/admin/asoebi")) {
       return <AsoebiOrders />;
+    }
+    if (path.startsWith("/admin/gifts")) {
+      return <Gifts />;
     }
 
     return <AdminDashboard />;
