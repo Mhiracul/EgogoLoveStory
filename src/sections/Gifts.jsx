@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import SectionHeading from "../components/SectionHeading";
 
-const presetAmounts = [20000, 50000, 100000, 200000];
-
+const presetAmounts = [50000, 100000, 250000, 500000, 1000000, 2000000];
 const initialForm = {
   name: "",
   email: "",
@@ -78,8 +77,8 @@ export default function Gifts() {
     setError("");
     setSuccess(false);
 
-    if (!totalAmount || totalAmount < 1000) {
-      setError("Please select or enter an amount of at least ₦1,000.");
+    if (!totalAmount || totalAmount < 50000) {
+      setError("Please select or enter an amount of at least ₦50,000.");
       return;
     }
 
@@ -247,7 +246,8 @@ export default function Gifts() {
           </div>
 
           {/* Preset amounts */}
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {" "}
             {presetAmounts.map((amount) => {
               const selected = selectedAmount === amount;
 
@@ -281,7 +281,7 @@ export default function Gifts() {
 
               <input
                 type="number"
-                min="1000"
+                min="50000"
                 value={customAmount}
                 placeholder="Enter amount"
                 onChange={handleCustomAmount}
@@ -290,7 +290,7 @@ export default function Gifts() {
             </div>
 
             <p className="mt-2 text-[10px] text-brown/30">
-              Minimum gift amount: ₦1,000
+              Minimum gift amount: ₦50,000{" "}
             </p>
           </div>
 
