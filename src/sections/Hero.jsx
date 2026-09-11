@@ -1,3 +1,4 @@
+import Prewedding from "../assets/Prewedding.png";
 export default function Hero() {
   return (
     <section
@@ -82,24 +83,14 @@ export default function Hero() {
           <div className="absolute -right-3 -top-3 h-full w-full border border-champagne/30" />
 
           <div className="relative aspect-4/5 overflow-hidden bg-brown/10">
-            {/* Replace this background with your actual pre-wedding image later */}
-            <div className="absolute inset-0 bg-linear-to-b from-champagne/25 via-ivory to-brown/15" />
+            <img
+              src={Prewedding}
+              alt="Miracle and Steve — pre-wedding portrait"
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
 
-            <div className="relative flex h-full flex-col items-center justify-center px-8 text-center">
-              <span className="font-display text-[7rem] leading-none text-champagne/45 sm:text-[9rem]">
-                M<span className="text-burgundy/45"> & </span>S
-              </span>
-
-              <div className="mt-8 h-px w-16 bg-champagne/50" />
-
-              <p className="mt-6 font-display text-3xl italic text-brown/45">
-                Our photo goes here
-              </p>
-
-              <p className="mt-2 text-[9px] uppercase tracking-[0.3em] text-brown/30">
-                Pre-wedding photograph
-              </p>
-            </div>
+            {/* Subtle luxury overlay */}
+            <div className="absolute inset-0 bg-linear-to-t from-brown/15 via-transparent to-transparent" />
           </div>
 
           {/* Floating note */}
