@@ -1,4 +1,5 @@
 import SectionHeading from "../components/SectionHeading";
+import { FadeUp, FadeRight, FadeLeft } from "../components/Motion";
 
 const events = [
   {
@@ -39,87 +40,89 @@ const events = [
   },
 ];
 
-function EventItem({ event }) {
+function EventItem({ event, index }) {
   return (
-    <article className="group relative overflow-hidden border border-ivory/10 bg-white/2 transition duration-500 hover:border-champagne/50">
-      {/* Number */}
-      <div className="absolute right-7 top-6 font-display text-6xl leading-none text-ivory/5 transition duration-500 group-hover:text-champagne/10">
-        {event.number}
-      </div>
+    <FadeUp delay={index * 0.18} className="h-full">
+      <article className="group relative h-full overflow-hidden border border-ivory/10 bg-white/2 transition duration-700 hover:border-champagne/50">
+        {/* Number */}
+        <div className="absolute right-7 top-6 font-display text-6xl leading-none text-ivory/5 transition duration-500 group-hover:text-champagne/10">
+          {event.number}
+        </div>
 
-      <div className="relative p-7 sm:p-9">
-        {/* Event type */}
-        <div className="flex items-center gap-3">
-          <span className="h-px w-8 bg-champagne" />
+        <div className="relative p-7 sm:p-9">
+          {/* Event type */}
+          <div className="flex items-center gap-3">
+            <span className="h-px w-8 bg-champagne" />
 
-          <p className="text-[10px] uppercase tracking-[0.3em] text-champagne">
-            {event.type}
+            <p className="text-[10px] uppercase tracking-[0.3em] text-champagne">
+              {event.type}
+            </p>
+          </div>
+
+          {/* Title */}
+          <h3 className="mt-7 max-w-xs font-display text-4xl leading-[0.95] sm:text-5xl">
+            {event.title}
+          </h3>
+
+          {/* Details */}
+          <div className="mt-9 space-y-5 border-y border-ivory/10 py-7">
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.25em] text-ivory/35">
+                Date
+              </p>
+
+              <p className="mt-1 font-display text-xl text-ivory/85">
+                {event.date}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.25em] text-ivory/35">
+                Time
+              </p>
+
+              <p className="mt-1 font-display text-xl text-ivory/85">
+                {event.time}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.25em] text-ivory/35">
+                Venue
+              </p>
+
+              <p className="mt-1 text-sm text-ivory/70">{event.venue}</p>
+
+              <p className="mt-1 text-xs text-ivory/40">{event.location}</p>
+            </div>
+          </div>
+
+          {/* Description */}
+          <p className="mt-7 text-sm leading-7 text-ivory/50">
+            {event.description}
           </p>
-        </div>
 
-        {/* Title */}
-        <h3 className="mt-7 max-w-xs font-display text-4xl leading-[0.95] sm:text-5xl">
-          {event.title}
-        </h3>
+          {/* Dress code */}
+          <div className="mt-7 flex items-center justify-between border-t border-ivory/10 pt-6">
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.2em] text-ivory/30">
+                Dress Code
+              </p>
 
-        {/* Details */}
-        <div className="mt-9 space-y-5 border-y border-ivory/10 py-7">
-          <div>
-            <p className="text-[9px] uppercase tracking-[0.25em] text-ivory/35">
-              Date
-            </p>
+              <p className="mt-1 text-xs text-champagne">{event.dressCode}</p>
+            </div>
 
-            <p className="mt-1 font-display text-xl text-ivory/85">
-              {event.date}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-[9px] uppercase tracking-[0.25em] text-ivory/35">
-              Time
-            </p>
-
-            <p className="mt-1 font-display text-xl text-ivory/85">
-              {event.time}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-[9px] uppercase tracking-[0.25em] text-ivory/35">
-              Venue
-            </p>
-
-            <p className="mt-1 text-sm text-ivory/70">{event.venue}</p>
-
-            <p className="mt-1 text-xs text-ivory/40">{event.location}</p>
+            {/* This will become a real Google Maps link once the venue is confirmed */}
+            <button
+              type="button"
+              className="text-[10px] uppercase tracking-[0.2em] text-ivory/50 transition hover:text-champagne"
+            >
+              Directions →
+            </button>
           </div>
         </div>
-
-        {/* Description */}
-        <p className="mt-7 text-sm leading-7 text-ivory/50">
-          {event.description}
-        </p>
-
-        {/* Dress code */}
-        <div className="mt-7 flex items-center justify-between border-t border-ivory/10 pt-6">
-          <div>
-            <p className="text-[9px] uppercase tracking-[0.2em] text-ivory/30">
-              Dress Code
-            </p>
-
-            <p className="mt-1 text-xs text-champagne">{event.dressCode}</p>
-          </div>
-
-          {/* This will become a real Google Maps link once the venue is confirmed */}
-          <button
-            type="button"
-            className="text-[10px] uppercase tracking-[0.2em] text-ivory/50 transition hover:text-champagne"
-          >
-            Directions →
-          </button>
-        </div>
-      </div>
-    </article>
+      </article>
+    </FadeUp>
   );
 }
 
@@ -135,39 +138,44 @@ export default function WeddingEvents() {
       <div className="pointer-events-none absolute -bottom-40 -right-40 h-125 w-125 rounded-full bg-burgundy/20 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <SectionHeading
-          light
-          eyebrow="Save the date"
-          title="The Wedding"
-          description="Three beautiful moments. One unforgettable celebration. We cannot wait to share these moments with you."
-        />
+        {/* Heading */}
+        <FadeUp>
+          <SectionHeading
+            light
+            eyebrow="Save the date"
+            title="The Wedding"
+            description="Three beautiful moments. One unforgettable celebration. We cannot wait to share these moments with you."
+          />
+        </FadeUp>
 
         {/* Events */}
         <div className="mt-16 grid gap-5 lg:grid-cols-3">
-          {events.map((event) => (
-            <EventItem key={event.number} event={event} />
+          {events.map((event, index) => (
+            <EventItem key={event.number} event={event} index={index} />
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-ivory/10 pt-10 sm:flex-row">
-          <div>
-            <p className="font-display text-2xl italic text-ivory/70">
-              We saved you a seat.
-            </p>
+        <FadeUp delay={0.25}>
+          <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-ivory/10 pt-10 sm:flex-row">
+            <div>
+              <p className="font-display text-2xl italic text-ivory/70">
+                We saved you a seat.
+              </p>
 
-            <p className="mt-1 text-xs text-ivory/35">
-              Let us know you'll be joining us.
-            </p>
+              <p className="mt-1 text-xs text-ivory/35">
+                Let us know you'll be joining us.
+              </p>
+            </div>
+
+            <a
+              href="#rsvp"
+              className="rounded-full bg-champagne px-8 py-4 text-xs uppercase tracking-[0.2em] text-brown transition hover:bg-ivory"
+            >
+              RSVP Now
+            </a>
           </div>
-
-          <a
-            href="#rsvp"
-            className="rounded-full bg-champagne px-8 py-4 text-xs uppercase tracking-[0.2em] text-brown transition hover:bg-ivory"
-          >
-            RSVP Now
-          </a>
-        </div>
+        </FadeUp>
       </div>
     </section>
   );

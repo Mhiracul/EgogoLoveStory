@@ -30,6 +30,7 @@ body {
   color: #3a2922;
   font-family: "DM Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
+  outline: none;
 }
 
 * {
@@ -839,5 +840,207 @@ select {
 
   .tap-to-open {
     animation: none;
+  }
+}
+
+/* =========================================================
+   SCROLL REVEAL ANIMATIONS
+========================================================= */
+
+.scroll-reveal {
+  opacity: 0;
+
+  transition:
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+
+  transition-delay: var(--reveal-delay);
+}
+
+/* FADE UP */
+
+.scroll-reveal--fade-up {
+  transform: translateY(60px);
+}
+
+/* FADE DOWN */
+
+.scroll-reveal--fade-down {
+  transform: translateY(-50px);
+}
+
+/* FADE LEFT */
+
+.scroll-reveal--fade-left {
+  transform: translateX(-70px);
+}
+
+/* FADE RIGHT */
+
+.scroll-reveal--fade-right {
+  transform: translateX(70px);
+}
+
+/* SCALE */
+
+.scroll-reveal--scale {
+  transform: scale(0.92);
+}
+
+/* SOFT ZOOM */
+
+.scroll-reveal--zoom {
+  transform: scale(0.96);
+}
+
+/* WHEN VISIBLE */
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
+
+/* =========================================================
+   CINEMATIC IMAGE REVEAL
+========================================================= */
+
+.cinematic-image {
+  overflow: hidden;
+}
+
+.cinematic-image img {
+  transform: scale(1.08);
+
+  transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-image.is-visible img {
+  transform: scale(1);
+}
+
+/* =========================================================
+   GOLD SHIMMER
+========================================================= */
+
+.gold-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-shimmer::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -120%;
+
+  width: 60%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 224, 155, 0.18),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 1.5s ease;
+}
+
+.gold-shimmer.is-visible::after {
+  left: 140%;
+}
+
+/* =========================================================
+   FLOATING MUSIC FEEL
+========================================================= */
+
+.music-control {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.music-control:hover {
+  transform: translateY(-3px);
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal--fade-up,
+  .scroll-reveal--fade-down,
+  .scroll-reveal--fade-left,
+  .scroll-reveal--fade-right,
+  .scroll-reveal--scale,
+  .scroll-reveal--zoom {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* =========================================
+   SCROLL REVEAL ANIMATIONS
+========================================= */
+
+.scroll-reveal {
+  opacity: 0;
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Fade up */
+.scroll-reveal-fade-up {
+  transform: translateY(60px);
+}
+
+/* Fade down */
+.scroll-reveal-fade-down {
+  transform: translateY(-60px);
+}
+
+/* Fade left */
+.scroll-reveal-fade-left {
+  transform: translateX(-70px);
+}
+
+/* Fade right */
+.scroll-reveal-fade-right {
+  transform: translateX(70px);
+}
+
+/* Zoom */
+.scroll-reveal-zoom {
+  transform: scale(0.92);
+}
+
+/* Scale */
+.scroll-reveal-scale {
+  transform: scale(0.88);
+}
+
+/* Visible */
+.scroll-reveal-visible {
+  opacity: 1;
+  transform: translate(0) scale(1);
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
