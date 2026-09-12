@@ -4,10 +4,11 @@ export default function GiftCard({
   description,
   amount,
   action = "Contribute",
+  onContribute,
 }) {
   return (
     <article className="group border border-brown/10 bg-white/60 p-7 transition duration-300 hover:-translate-y-1 hover:border-champagne/50">
-      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-champagne/30 bg-champagne/5 text-2xl">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-champagne/30 bg-champagne/5 font-display text-sm tracking-widest text-champagne">
         {icon}
       </div>
 
@@ -19,7 +20,11 @@ export default function GiftCard({
         <p className="mt-5 font-display text-2xl text-burgundy">{amount}</p>
       )}
 
-      <button className="mt-6 text-xs uppercase tracking-[0.2em] text-burgundy">
+      <button
+        type="button"
+        onClick={onContribute}
+        className="mt-6 w-full rounded-full border border-brown/15 px-5 py-3 text-xs uppercase tracking-[0.2em] text-brown transition hover:border-burgundy hover:bg-burgundy hover:text-white"
+      >
         {action} →
       </button>
     </article>

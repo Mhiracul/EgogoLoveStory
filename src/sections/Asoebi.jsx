@@ -125,7 +125,7 @@ export default function Asoebi() {
 
       // 4. Open Paystack checkout
       paystack.newTransaction({
-        key: "pk_live_72f9877422860412fcac12bd268548c74c227e49",
+        key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
         email: form.email,
         amount: totalAmount * 100,
         currency: "NGN",

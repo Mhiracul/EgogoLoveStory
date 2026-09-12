@@ -6,6 +6,10 @@ import RSVPs from "./pages/RSVPs";
 import AdminLogin from "./pages/AdminLogin";
 import AsoebiOrders from "./pages/AsoebiOrders";
 import Gifts from "./pages/Gifts";
+import Registry from "./pages/Registry";
+import Gallery from "./pages/Gallery";
+import GuestSubmissions from "./pages/GuestSubmissions";
+import Wishes from "./pages/Wishes";
 
 export default function AdminApp() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -39,6 +43,18 @@ export default function AdminApp() {
     }
     if (path.startsWith("/admin/gifts")) {
       return <Gifts />;
+    }
+    if (path.startsWith("/admin/registry")) {
+      return <Registry />;
+    }
+    if (path.startsWith("/admin/gallery")) {
+      return <Gallery />;
+    }
+    if (path.startsWith("/admin/submissions")) {
+      return <GuestSubmissions />;
+    }
+    if (path.startsWith("/admin/wishes")) {
+      return <Wishes />;
     }
 
     return <AdminDashboard />;

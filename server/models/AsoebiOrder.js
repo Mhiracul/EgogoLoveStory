@@ -53,6 +53,12 @@ const asoebiOrderSchema = new mongoose.Schema(
       enum: ["pending", "paid", "failed"],
       default: "pending",
     },
+    paymentReference: {
+      type: String,
+      trim: true,
+      unique: true,
+      sparse: true,
+    },
 
     orderStatus: {
       type: String,

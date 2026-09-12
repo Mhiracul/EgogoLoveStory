@@ -6,7 +6,6 @@ import Footer from "./components/Footer";
 import MobileNav from "./components/MobileNav";
 import WeddingEntrance from "./components/WeddingEntrance";
 import MusicControl from "./components/MusicControl";
-
 import Hero from "./sections/Hero";
 import OurStory from "./sections/OurStory";
 import WeddingEvents from "./sections/WeddingEvents";
@@ -18,13 +17,15 @@ import RSVP from "./sections/RSVP";
 import Gallery from "./sections/Gallery";
 import FAQ from "./sections/FAQ";
 import Contact from "./sections/Contact";
-
 import AdminApp from "./admin/AdminApp";
-
 import ordinary from "./assets/countonyou.mp3";
+import WeddingWishes from "./sections/WeddingWishes";
 
 function App() {
   const [showEntrance, setShowEntrance] = useState(true);
+
+  const [registryAmount, setRegistryAmount] = useState(null);
+
   const audioRef = useRef(null);
 
   if (window.location.pathname.startsWith("/admin")) {
@@ -44,6 +45,14 @@ function App() {
 
   const handleEntranceComplete = () => {
     setShowEntrance(false);
+  };
+
+  const handleRegistryContribution = (amount) => {
+    setRegistryAmount(amount);
+
+    setTimeout(() => {
+      document.getElementById("gifts")?.scrollIntoView({ behavior: "smooth" });
+    }, 50);
   };
 
   return (
@@ -70,10 +79,17 @@ function App() {
           <WeddingEvents />
           <DressCode />
           <Asoebi />
-          <Gifts />
-          <GiftRegistry />
+
+          <Gifts
+            registryAmount={registryAmount}
+            onRegistryAmountUsed={() => setRegistryAmount(null)}
+          />
+
+          <GiftRegistry onContribute={handleRegistryContribution} />
+
           <RSVP />
           <Gallery />
+          <WeddingWishes />
           <FAQ />
           <Contact />
         </main>

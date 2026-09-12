@@ -242,6 +242,20 @@ router.post("/verify-payment", async (req, res) => {
       });
     }
 
+    if (order.paymentStatus === "paid") {
+      return res.status(400).json({
+        success: false,
+        message: "This order has already been paid for.",
+      });
+    }
+
+    if (!process.env.PAYSTACK_SECRET_KEY) {
+      return res.status(500).json({
+        success: false,
+        message: "Paystack is not configured on the server.",
+      });
+    }
+
     const paystackResponse = await fetch(
       `https://api.paystack.co/transaction/verify/${encodeURIComponent(
         reference,
@@ -272,7 +286,8 @@ router.post("/verify-payment", async (req, res) => {
     // Verify both payment status and amount.
     if (
       transaction.status !== "success" ||
-      Number(transaction.amount) !== expectedAmountInKobo
+      Number(transaction.amount) !== expectedAmountInKobo ||
+      transaction.metadata?.orderId !== order._id.toString()
     ) {
       return res.status(400).json({
         success: false,
@@ -282,6 +297,7 @@ router.post("/verify-payment", async (req, res) => {
 
     order.paymentStatus = "paid";
     order.orderStatus = "confirmed";
+    order.paymentReference = transaction.reference;
 
     await order.save();
 
