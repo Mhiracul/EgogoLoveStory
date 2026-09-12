@@ -35,6 +35,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react-dom", "virtual:5877d4cd1d38caa7c78c1f18622bb43528ab4690c15cd4944b039cbd4df7a190da70166c8cfb2b3d1f2ad27d1bf37e592f043f31dd139779dcb1d2b36b72daa4#npm:19.3.0"],\
           ["@vitejs/plugin-react", "virtual:5877d4cd1d38caa7c78c1f18622bb43528ab4690c15cd4944b039cbd4df7a190da70166c8cfb2b3d1f2ad27d1bf37e592f043f31dd139779dcb1d2b36b72daa4#npm:6.1.1"],\
           ["bcryptjs", "npm:3.0.3"],\
+          ["cloudinary", "npm:2.11.0"],\
           ["cors", "npm:2.8.6"],\
           ["dotenv", "npm:17.4.2"],\
           ["egogolovestory", "workspace:."],\
@@ -1378,6 +1379,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["cloudinary", [\
+      ["npm:2.11.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/cloudinary-npm-2.11.0-06b29aeb7e-10c0.zip/node_modules/cloudinary/",\
+        "packageDependencies": [\
+          ["cloudinary", "npm:2.11.0"],\
+          ["lodash", "npm:4.18.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["concat-stream", [\
       ["npm:2.0.0", {\
         "packageLocation": "../../../.yarn/berry/cache/concat-stream-npm-2.0.0-8bb2ad5aa0-10c0.zip/node_modules/concat-stream/",\
@@ -1590,6 +1601,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react-dom", "virtual:5877d4cd1d38caa7c78c1f18622bb43528ab4690c15cd4944b039cbd4df7a190da70166c8cfb2b3d1f2ad27d1bf37e592f043f31dd139779dcb1d2b36b72daa4#npm:19.3.0"],\
           ["@vitejs/plugin-react", "virtual:5877d4cd1d38caa7c78c1f18622bb43528ab4690c15cd4944b039cbd4df7a190da70166c8cfb2b3d1f2ad27d1bf37e592f043f31dd139779dcb1d2b36b72daa4#npm:6.1.1"],\
           ["bcryptjs", "npm:3.0.3"],\
+          ["cloudinary", "npm:2.11.0"],\
           ["cors", "npm:2.8.6"],\
           ["dotenv", "npm:17.4.2"],\
           ["egogolovestory", "workspace:."],\
@@ -2771,6 +2783,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["locate-path", "npm:6.0.0"],\
           ["p-locate", "npm:5.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["lodash", [\
+      ["npm:4.18.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/lodash-npm-4.18.1-a64c3070ac-10c0.zip/node_modules/lodash/",\
+        "packageDependencies": [\
+          ["lodash", "npm:4.18.1"]\
         ],\
         "linkType": "HARD"\
       }]\

@@ -1,68 +1,18 @@
 import express from "express";
 import multer from "multer";
-import path from "path";
-import fs from "fs";
 
 import GuestSubmission from "../models/GuestSubmission.js";
 import Gallery from "../models/Gallery.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import cloudinary from "../config/cloudinary.js";
 
 const router = express.Router();
 
 // ------------------------------------
-// UPLOAD DIRECTORIES
+// MULTER MEMORY STORAGE
 // ------------------------------------
 
-const submissionDirectory = path.join(
-  process.cwd(),
-  "server",
-  "uploads",
-  "submissions",
-);
-
-const galleryDirectory = path.join(
-  process.cwd(),
-  "server",
-  "uploads",
-  "gallery",
-);
-
-if (!fs.existsSync(submissionDirectory)) {
-  fs.mkdirSync(submissionDirectory, {
-    recursive: true,
-  });
-}
-
-if (!fs.existsSync(galleryDirectory)) {
-  fs.mkdirSync(galleryDirectory, {
-    recursive: true,
-  });
-}
-
-// ------------------------------------
-// MULTER STORAGE
-// ------------------------------------
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, submissionDirectory);
-  },
-
-  filename: (req, file, cb) => {
-    const extension = path.extname(file.originalname);
-
-    const safeName = path
-      .basename(file.originalname, extension)
-      .replace(/[^a-zA-Z0-9-_]/g, "-")
-      .toLowerCase();
-
-    cb(null, `${Date.now()}-${safeName}${extension}`);
-  },
-});
-
-// ------------------------------------
-// FILE FILTER
-// ------------------------------------
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
@@ -83,6 +33,29 @@ const upload = multer({
 });
 
 // ------------------------------------
+// CLOUDINARY UPLOAD HELPER
+// ------------------------------------
+
+const uploadToCloudinary = (buffer) =>
+  new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        folder: "egogolovestory/guest-submissions",
+        resource_type: "image",
+      },
+      (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      },
+    );
+
+    uploadStream.end(buffer);
+  });
+
+// ------------------------------------
 // PUBLIC — GUEST SUBMIT PHOTO
 // ------------------------------------
 
@@ -98,24 +71,19 @@ router.post("/", upload.single("image"), async (req, res) => {
     const { guestName, caption } = req.body;
 
     if (!guestName?.trim()) {
-      const filePath = path.join(submissionDirectory, req.file.filename);
-
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-
       return res.status(400).json({
         success: false,
         message: "Please enter your name.",
       });
     }
 
-    const imageUrl = `/uploads/submissions/${req.file.filename}`;
+    const cloudinaryResult = await uploadToCloudinary(req.file.buffer);
 
     const submission = await GuestSubmission.create({
       guestName: guestName.trim(),
       caption: caption?.trim() || "",
-      image: imageUrl,
+      image: cloudinaryResult.secure_url,
+      cloudinaryPublicId: cloudinaryResult.public_id,
       status: "pending",
     });
 
@@ -127,14 +95,6 @@ router.post("/", upload.single("image"), async (req, res) => {
     });
   } catch (error) {
     console.error("Guest photo submission error:", error);
-
-    if (req.file) {
-      const filePath = path.join(submissionDirectory, req.file.filename);
-
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    }
 
     return res.status(500).json({
       success: false,
@@ -176,8 +136,6 @@ router.get("/admin/all", authMiddleware, async (req, res) => {
 // ------------------------------------
 
 router.patch("/admin/:id/approve", authMiddleware, async (req, res) => {
-  let galleryFilePath = null;
-
   try {
     const submission = await GuestSubmission.findById(req.params.id);
 
@@ -195,37 +153,24 @@ router.patch("/admin/:id/approve", authMiddleware, async (req, res) => {
       });
     }
 
-    const submissionFilename = path.basename(submission.image);
-
-    const oldFilePath = path.join(submissionDirectory, submissionFilename);
-
-    if (!fs.existsSync(oldFilePath)) {
-      return res.status(404).json({
+    if (!submission.image) {
+      return res.status(400).json({
         success: false,
-        message: "The uploaded image could not be found.",
+        message: "This submission has no image.",
       });
     }
 
-    // Create a unique filename for the public gallery
-    const galleryFilename = `guest-${Date.now()}-${submissionFilename}`;
-
-    galleryFilePath = path.join(galleryDirectory, galleryFilename);
-
-    // Copy submission image into gallery folder
-    fs.copyFileSync(oldFilePath, galleryFilePath);
-
-    const galleryImageUrl = `/uploads/gallery/${galleryFilename}`;
-
-    // Create Gallery record
+    // Reuse the existing Cloudinary image.
+    // We do NOT upload/copy the image again.
     const galleryPhoto = await Gallery.create({
-      image: galleryImageUrl,
+      image: submission.image,
+      cloudinaryPublicId: submission.cloudinaryPublicId || "",
       caption: submission.caption || `Shared by ${submission.guestName}`,
       category: "Special Moments",
       featured: false,
       order: 0,
     });
 
-    // Link submission to Gallery photo
     submission.status = "approved";
     submission.galleryPhoto = galleryPhoto._id;
     submission.reviewedAt = new Date();
@@ -242,11 +187,6 @@ router.patch("/admin/:id/approve", authMiddleware, async (req, res) => {
     });
   } catch (error) {
     console.error("Guest submission approval error:", error);
-
-    // Remove copied gallery file if approval failed
-    if (galleryFilePath && fs.existsSync(galleryFilePath)) {
-      fs.unlinkSync(galleryFilePath);
-    }
 
     return res.status(500).json({
       success: false,
@@ -270,8 +210,6 @@ router.patch("/admin/:id/reject", authMiddleware, async (req, res) => {
       });
     }
 
-    // Don't allow an approved photo to become rejected
-    // because it already exists in the public Gallery.
     if (submission.status === "approved") {
       return res.status(400).json({
         success: false,
@@ -315,48 +253,24 @@ router.delete("/admin/:id", authMiddleware, async (req, res) => {
       });
     }
 
-    // ------------------------------------
-    // IF APPROVED:
-    // Delete the linked Gallery record
-    // and its physical gallery image.
-    // ------------------------------------
-
+    // If approved, remove the linked Gallery record.
     if (submission.galleryPhoto) {
-      const galleryPhoto = await Gallery.findById(submission.galleryPhoto);
+      await Gallery.findByIdAndDelete(submission.galleryPhoto);
+    }
 
-      if (galleryPhoto) {
-        if (galleryPhoto.image?.startsWith("/uploads/gallery/")) {
-          const galleryFilename = path.basename(galleryPhoto.image);
-
-          const galleryFilePath = path.join(galleryDirectory, galleryFilename);
-
-          if (fs.existsSync(galleryFilePath)) {
-            fs.unlinkSync(galleryFilePath);
-          }
-        }
-
-        await Gallery.findByIdAndDelete(galleryPhoto._id);
+    // Remove the image from Cloudinary.
+    if (submission.cloudinaryPublicId) {
+      try {
+        await cloudinary.uploader.destroy(submission.cloudinaryPublicId);
+      } catch (cloudinaryError) {
+        console.error(
+          "Cloudinary guest photo deletion error:",
+          cloudinaryError,
+        );
       }
     }
 
-    // ------------------------------------
-    // Delete original submission image
-    // ------------------------------------
-
-    if (submission.image?.startsWith("/uploads/submissions/")) {
-      const filename = path.basename(submission.image);
-
-      const filePath = path.join(submissionDirectory, filename);
-
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    }
-
-    // ------------------------------------
-    // Delete submission record
-    // ------------------------------------
-
+    // Remove the submission from MongoDB.
     await GuestSubmission.findByIdAndDelete(submission._id);
 
     return res.status(200).json({

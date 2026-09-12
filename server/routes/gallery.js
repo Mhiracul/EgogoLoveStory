@@ -1,50 +1,18 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
-import fs from "fs";
 
 import Gallery from "../models/Gallery.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import cloudinary from "../config/cloudinary.js";
 
 const router = express.Router();
 
 // ------------------------------------
-// UPLOAD DIRECTORY
+// MULTER — STORE IMAGE IN MEMORY
 // ------------------------------------
 
-const uploadDirectory = path.join(
-  process.cwd(),
-  "server",
-  "uploads",
-  "gallery",
-);
-
-if (!fs.existsSync(uploadDirectory)) {
-  fs.mkdirSync(uploadDirectory, {
-    recursive: true,
-  });
-}
-
-// ------------------------------------
-// MULTER STORAGE
-// ------------------------------------
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDirectory);
-  },
-
-  filename: (req, file, cb) => {
-    const extension = path.extname(file.originalname);
-
-    const safeName = path
-      .basename(file.originalname, extension)
-      .replace(/[^a-zA-Z0-9-_]/g, "-")
-      .toLowerCase();
-
-    cb(null, `${Date.now()}-${safeName}${extension}`);
-  },
-});
+const storage = multer.memoryStorage();
 
 // ------------------------------------
 // FILE FILTER
@@ -67,6 +35,46 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024,
   },
 });
+
+// ------------------------------------
+// HELPER — UPLOAD TO CLOUDINARY
+// ------------------------------------
+
+const uploadToCloudinary = (file) => {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        folder: "egogolovestory/gallery",
+        resource_type: "image",
+      },
+      (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      },
+    );
+
+    uploadStream.end(file.buffer);
+  });
+};
+
+// ------------------------------------
+// HELPER — DELETE FROM CLOUDINARY
+// ------------------------------------
+
+const deleteFromCloudinary = async (publicId) => {
+  if (!publicId) return;
+
+  try {
+    await cloudinary.uploader.destroy(publicId, {
+      resource_type: "image",
+    });
+  } catch (error) {
+    console.error("Cloudinary delete error:", error);
+  }
+};
 
 // ------------------------------------
 // PUBLIC — GET GALLERY
@@ -137,15 +145,21 @@ router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
 
     const { caption, category, featured, order } = req.body;
 
-    const imageUrl = `/uploads/gallery/${req.file.filename}`;
+    // Upload image to Cloudinary
+    const cloudinaryResult = await uploadToCloudinary(req.file);
 
     const photo = await Gallery.create({
-      image: imageUrl,
+      image: cloudinaryResult.secure_url,
       caption: caption || "",
       category: category || "Pre-Wedding",
       featured: featured === "true",
       order: Number(order) || 0,
     });
+
+    // Save Cloudinary public ID separately
+    photo.cloudinaryPublicId = cloudinaryResult.public_id;
+
+    await photo.save();
 
     res.status(201).json({
       success: true,
@@ -154,14 +168,6 @@ router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
     });
   } catch (error) {
     console.error("Gallery creation error:", error);
-
-    if (req.file) {
-      const filePath = path.join(uploadDirectory, req.file.filename);
-
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    }
 
     res.status(500).json({
       success: false,
@@ -187,20 +193,18 @@ router.put("/:id", authMiddleware, upload.single("image"), async (req, res) => {
 
     const { caption, category, featured, order } = req.body;
 
+    // If a new image was uploaded
     if (req.file) {
-      const oldImage = photo.image;
+      // Upload new image first
+      const cloudinaryResult = await uploadToCloudinary(req.file);
 
-      photo.image = `/uploads/gallery/${req.file.filename}`;
-
-      if (oldImage?.startsWith("/uploads/gallery/")) {
-        const oldFilename = path.basename(oldImage);
-
-        const oldFilePath = path.join(uploadDirectory, oldFilename);
-
-        if (fs.existsSync(oldFilePath)) {
-          fs.unlinkSync(oldFilePath);
-        }
+      // Delete old Cloudinary image
+      if (photo.cloudinaryPublicId) {
+        await deleteFromCloudinary(photo.cloudinaryPublicId);
       }
+
+      photo.image = cloudinaryResult.secure_url;
+      photo.cloudinaryPublicId = cloudinaryResult.public_id;
     }
 
     if (caption !== undefined) {
@@ -242,7 +246,7 @@ router.put("/:id", authMiddleware, upload.single("image"), async (req, res) => {
 
 router.delete("/:id", authMiddleware, async (req, res) => {
   try {
-    const photo = await Gallery.findByIdAndDelete(req.params.id);
+    const photo = await Gallery.findById(req.params.id);
 
     if (!photo) {
       return res.status(404).json({
@@ -251,15 +255,13 @@ router.delete("/:id", authMiddleware, async (req, res) => {
       });
     }
 
-    if (photo.image?.startsWith("/uploads/gallery/")) {
-      const filename = path.basename(photo.image);
-
-      const filePath = path.join(uploadDirectory, filename);
-
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
+    // Delete image from Cloudinary
+    if (photo.cloudinaryPublicId) {
+      await deleteFromCloudinary(photo.cloudinaryPublicId);
     }
+
+    // Delete MongoDB record
+    await Gallery.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
       success: true,

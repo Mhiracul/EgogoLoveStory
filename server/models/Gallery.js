@@ -7,7 +7,10 @@ const gallerySchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-
+    cloudinaryPublicId: {
+      type: String,
+      default: "",
+    },
     caption: {
       type: String,
       trim: true,

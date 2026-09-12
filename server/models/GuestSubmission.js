@@ -22,6 +22,12 @@ const guestSubmissionSchema = new mongoose.Schema(
       trim: true,
     },
 
+    cloudinaryPublicId: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
