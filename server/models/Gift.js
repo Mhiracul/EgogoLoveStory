@@ -33,10 +33,12 @@ const giftSchema = new mongoose.Schema(
       default: true,
     },
 
-    paymentStatus: {
+    // Used when the contribution comes from the Gift Registry
+    registryItem: {
       type: String,
-      enum: ["pending", "paid", "failed"],
-      default: "pending",
+      trim: true,
+      maxlength: 100,
+      default: null,
     },
 
     paymentStatus: {
