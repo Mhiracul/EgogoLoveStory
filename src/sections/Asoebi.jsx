@@ -2,7 +2,7 @@ import { useState } from "react";
 import { X, CheckCircle2, Loader2, ShoppingBag } from "lucide-react";
 import SectionHeading from "../components/SectionHeading";
 
-const ASOEBI_PRICE = 50000;
+const ASOEBI_PRICE = 80000;
 
 const initialForm = {
   customerName: "",

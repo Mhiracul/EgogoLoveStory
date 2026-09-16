@@ -4,7 +4,7 @@ import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-const ASOEBI_PRICE = 50000;
+const ASOEBI_PRICE = 80000;
 
 // ==========================================
 // ADMIN - GET ALL ORDERS
