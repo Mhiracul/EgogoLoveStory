@@ -4,22 +4,10 @@ import { FadeUp, FadeRight, FadeLeft } from "../components/Motion";
 const events = [
   {
     number: "01",
-    type: "Traditional",
-    title: "Traditional Marriage",
-    date: "April 2027",
-    time: "10:00 AM",
-    venue: "Venue to be announced",
-    location: "Lagos, Nigeria",
-    description:
-      "Join our families as we celebrate our union in the richness, beauty and joy of our traditional heritage.",
-    dressCode: "Traditional Elegance",
-  },
-  {
-    number: "02",
     type: "Church",
     title: "Church Wedding",
-    date: "April 2027",
-    time: "10:00 AM",
+    date: "3rd April 2027",
+    time: "12:00 PM",
     venue: "Venue to be announced",
     location: "Lagos, Nigeria",
     description:
@@ -27,11 +15,24 @@ const events = [
     dressCode: "Formal / Church Elegance",
   },
   {
+    number: "02",
+    type: "Traditional",
+    title: "Traditional Marriage",
+    date: "3rd April 2027",
+    time: "03:00 PM",
+    venue: "Venue to be announced",
+    location: "Lagos, Nigeria",
+    description:
+      "Join our families as we celebrate our union in the richness, beauty and joy of our traditional heritage.",
+    dressCode: "Traditional Elegance",
+  },
+
+  {
     number: "03",
     type: "Reception",
     title: "Wedding Reception",
-    date: "April 2027",
-    time: "2:00 PM",
+    date: "3rd April 2027",
+    time: "04:00 PM",
     venue: "Venue to be announced",
     location: "Lagos, Nigeria",
     description:

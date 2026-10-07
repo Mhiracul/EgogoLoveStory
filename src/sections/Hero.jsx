@@ -43,7 +43,7 @@ export default function Hero() {
           {/* Wedding date */}
           <div className="mx-auto mt-9 flex w-fit items-center gap-5 border-y border-brown/10 py-4 lg:mx-0">
             <div className="text-center">
-              <p className="font-display text-2xl">April</p>
+              <p className="font-display text-2xl">3rd April</p>
               <p className="text-[9px] uppercase tracking-[0.25em] text-brown/45">
                 2027
               </p>
