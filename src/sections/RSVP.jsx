@@ -7,7 +7,6 @@ const initialForm = {
   phone: "",
   email: "",
   attendance: "",
-  guests: "",
   event: "",
   message: "",
 };
@@ -33,10 +32,9 @@ export default function RSVP() {
     setError("");
 
     if (
-      !form.name ||
-      !form.phone ||
+      !form.name.trim() ||
+      !form.phone.trim() ||
       !form.attendance ||
-      !form.guests ||
       !form.event
     ) {
       setError("Please fill in all required fields.");
@@ -51,9 +49,9 @@ export default function RSVP() {
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify({
           ...form,
-          guests: Number(form.guests),
         }),
       });
 
@@ -83,7 +81,7 @@ export default function RSVP() {
           light
           eyebrow="We would love to have you"
           title="Will you celebrate with us?"
-          description="Your presence would mean so much to us. Please let us know if you'll be joining us for our special day."
+          description="Your presence would mean so much to us. Kindly submit one RSVP per person, as each invitation admits one guest only."
         />
 
         <div className="mx-auto mt-16 max-w-3xl">
@@ -206,26 +204,6 @@ export default function RSVP() {
               </div>
 
               {/* Number of Guests */}
-              <div>
-                <label
-                  htmlFor="guests"
-                  className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-white/45"
-                >
-                  Number of Guests *
-                </label>
-
-                <input
-                  id="guests"
-                  name="guests"
-                  type="number"
-                  min="1"
-                  max="10"
-                  value={form.guests}
-                  onChange={handleChange}
-                  placeholder="How many people are attending?"
-                  className="w-full border border-white/15 bg-white/6 px-5 py-4 text-sm text-white outline-none placeholder:text-white/30 transition focus:border-champagne"
-                />
-              </div>
 
               {/* Event */}
               <div>
