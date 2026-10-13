@@ -21,6 +21,14 @@ export default function OurStory() {
         {/* Story Image */}
         <ScaleIn delay={0.15}>
           <div className="aspect-4/3 overflow-hidden bg-brown/5">
+            <img
+              src="/images/our-story.jpeg"
+              alt="Miracle and Steve's love story"
+              className="h-full w-full object-cover"
+              onError={(event) => {
+                event.currentTarget.style.display = "none";
+              }}
+            />
             <div className="flex h-full items-center justify-center">
               <span className="font-display text-5xl text-brown/20">
                 Our Story
@@ -39,12 +47,16 @@ export default function OurStory() {
                   Chapter 01
                 </p>
 
-                <h3 className="mt-2 font-display text-3xl">The Beginning</h3>
+                <h3 className="mt-2 font-display text-3xl">
+                  A Little Reply, A Beautiful Beginning
+                </h3>
 
                 <p className="mt-3 leading-7 text-brown/60">
-                  Every beautiful story has a beginning. Ours began with two
-                  people, one conversation and a journey neither of us knew
-                  would lead here.
+                  Who would have thought that TikTok would be where our story
+                  began? It started with a simple message and a reply I never
+                  expected to give. I usually wouldn't respond, but somehow,
+                  this time was different. What seemed like an ordinary
+                  interaction became the beginning of something extraordinary.
                 </p>
               </div>
             </FadeRight>
@@ -56,11 +68,18 @@ export default function OurStory() {
                   Chapter 02
                 </p>
 
-                <h3 className="mt-2 font-display text-3xl">The Journey</h3>
+                <h3 className="mt-2 font-display text-3xl">
+                  The Love That Brought Peace
+                </h3>
 
                 <p className="mt-3 leading-7 text-brown/60">
-                  Through every season, every laugh, every prayer and every
-                  challenge, our story continued to unfold.
+                  From that first conversation, something beautiful began to
+                  unfold. The conversations became meaningful, the connection
+                  grew deeper, and what neither of us could have fully imagined
+                  at the beginning became a love worth cherishing. Steve came
+                  into Miracle's life with a sense of certainty, and along the
+                  way, their story became one of love, peace, and choosing each
+                  other.
                 </p>
               </div>
             </FadeRight>
@@ -72,11 +91,17 @@ export default function OurStory() {
                   Chapter 03
                 </p>
 
-                <h3 className="mt-2 font-display text-3xl">Forever</h3>
+                <h3 className="mt-2 font-display text-3xl">
+                  From a Message to Forever
+                </h3>
 
                 <p className="mt-3 leading-7 text-brown/60">
-                  And now, we're stepping into our favourite chapter: forever
-                  together.
+                  Today, that little TikTok reply has become part of a much
+                  bigger story: two hearts preparing to build a life together.
+                  With love in their hearts and faith in God, Miracle and Steve
+                  are stepping into a new chapter, grateful for how it began and
+                  excited for all that lies ahead. Their next chapter isn't just
+                  another page in their story. It's forever.
                 </p>
               </div>
             </FadeRight>

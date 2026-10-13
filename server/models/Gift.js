@@ -40,7 +40,13 @@ const giftSchema = new mongoose.Schema(
       maxlength: 100,
       default: null,
     },
-
+    registryItemId: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+      default: null,
+      index: true,
+    },
     paymentStatus: {
       type: String,
       enum: ["pending", "paid", "failed"],

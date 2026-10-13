@@ -1,6 +1,12 @@
 import { Mail, MessageCircle } from "lucide-react";
 import SectionHeading from "../components/SectionHeading";
 
+const whatsappNumber = "2349153070499";
+
+const whatsappMessage = encodeURIComponent(
+  "Hello Miracle & Steve! I'm contacting you through your wedding website, The Egogo Love Story. I have an enquiry about your wedding.",
+);
+
 export default function Contact() {
   return (
     <section id="contact" className="bg-cream/40 py-28">
@@ -14,7 +20,9 @@ export default function Contact() {
         <div className="mx-auto mt-16 grid max-w-4xl gap-5 sm:grid-cols-2">
           {/* WhatsApp */}
           <a
-            href="#"
+            href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group border border-brown/10 bg-white p-8 transition duration-300 hover:-translate-y-1 hover:border-coral/50"
           >
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-coral/10 text-coral transition group-hover:bg-coral group-hover:text-white">
@@ -28,18 +36,20 @@ export default function Contact() {
             <h3 className="mt-2 font-display text-3xl">Chat With Us</h3>
 
             <p className="mt-3 text-sm leading-6 text-brown/50">
-              Send us a message on WhatsApp if you have any questions about the
-              celebration.
+              Have a question about our celebration? Message us directly on
+              WhatsApp through our wedding website.
             </p>
 
-            <span className="mt-7 inline-block text-[10px] uppercase tracking-[0.2em] text-coral">
+            <span className="mt-5 block text-sm text-brown/70"></span>
+
+            <span className="mt-4 inline-block text-[10px] uppercase tracking-[0.2em] text-coral">
               Start a conversation →
             </span>
           </a>
 
           {/* Email */}
           <a
-            href="mailto:"
+            href="mailto:YOUR_EMAIL_ADDRESS"
             className="group border border-brown/10 bg-white p-8 transition duration-300 hover:-translate-y-1 hover:border-champagne/50"
           >
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-champagne/10 text-champagne transition group-hover:bg-champagne group-hover:text-white">
