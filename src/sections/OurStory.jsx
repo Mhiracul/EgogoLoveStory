@@ -19,24 +19,45 @@ export default function OurStory() {
 
       <div className="mt-16 grid gap-12 lg:grid-cols-2">
         {/* Story Image */}
+        {/* Story Image */}
+        {/* Story Image */}
         <ScaleIn delay={0.15}>
-          <div className="aspect-4/3 overflow-hidden bg-brown/5">
+          <div className="relative aspect-4/3 overflow-hidden bg-brown/5">
+            {/* Blurred background image */}
             <img
-              src="/images/our-story.jpeg"
+              src="/images/our-story.jpg"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full scale-110 object-cover "
+              loading="lazy"
+            />
+
+            {/* Main image with subtle blur */}
+            <img
+              src="/images/our-story.jpg"
               alt="Miracle and Steve's love story"
-              className="h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover "
+              loading="lazy"
               onError={(event) => {
                 event.currentTarget.style.display = "none";
+                event.currentTarget.nextElementSibling.style.display = "flex";
               }}
             />
-            <div className="flex h-full items-center justify-center">
-              <span className="font-display text-5xl text-brown/20">
+
+            {/* Burgundy overlay, like the Hero video */}
+            <div className="absolute inset-0 bg-[#5B1025]/40" />
+
+            {/* Cinematic gradient */}
+            <div className="absolute inset-0 bg-linear-to-b from-black/10 via-transparent to-black/35" />
+
+            {/* Fallback shown if the image fails to load */}
+            <div className="absolute inset-0 hidden items-center justify-center">
+              <span className="font-display text-5xl text-white/60">
                 Our Story
               </span>
             </div>
           </div>
         </ScaleIn>
-
         {/* Story Chapters */}
         <div className="flex flex-col justify-center">
           <div className="space-y-8 border-l border-champagne/40 pl-8">

@@ -2,129 +2,112 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center overflow-hidden pt-24"
+      className="relative flex min-h-screen w-full  items-center justify-center overflow-hidden bg-burgundy text-white"
     >
-      {/* Decorative background */}
-      <div className="pointer-events-none absolute -left-45 top-[15%] h-105 w-105 rounded-full bg-champagne/10 blur-3xl" />
+      {/* Full-screen background video */}
+      <video
+        className="absolute inset-0 z-0 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+      >
+        <source src="/videos/preweddin.mp4" type="video/mp4" />
+      </video>
 
-      <div className="pointer-events-none absolute -bottom-45 -right-37.5 h-125 w-125 rounded-full bg-burgundy/5 blur-3xl" />
+      {/* Transparent burgundy tint — video remains visible */}
+      <div className="absolute inset-0 z-1 bg-[#5B1025]/80" />
 
-      <div className="pointer-events-none absolute right-[12%] top-[20%] hidden font-display text-[220px] leading-none text-champagne/5 lg:block">
-        &
-      </div>
+      {/* Extra gradient for cinematic depth */}
+      <div className="absolute inset-0 z-2 bg-linear-to-b from-black/10 via-transparent to-black/30" />
 
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-6 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 lg:py-24">
-        {/* LEFT */}
-        <div className="relative z-10 text-center lg:text-left">
-          <div className="mb-7 flex items-center justify-center gap-4 lg:justify-start">
-            <span className="h-px w-10 bg-champagne" />
-            <p className="text-[10px] uppercase tracking-[0.4em] text-champagne">
-              Save the Date
+      {/* Subtle vignette */}
+
+      {/* Hero content */}
+      <div className="relative z-10 mx-auto w-full max-w-5xl px-5 py-28 text-center sm:px-8">
+        <div className="mb-8 flex items-center justify-center gap-4">
+          <span className="h-px w-10 bg-champagne/80 sm:w-16" />
+
+          <p className="text-[10px] uppercase tracking-[0.4em] text-champagne sm:text-xs">
+            Together with our families
+          </p>
+
+          <span className="h-px w-10 bg-champagne/80 sm:w-16" />
+        </div>
+
+        <p className="mb-5 text-[10px] uppercase tracking-[0.45em] text-white/75 sm:text-xs">
+          Joyfully invite you to celebrate
+        </p>
+
+        <h1 className="font-display text-6xl font-medium leading-[0.95] tracking-[-0.04em] sm:text-8xl md:text-9xl">
+          Miracle
+          <span className="my-2 block font-display text-5xl italic text-champagne sm:text-7xl md:text-8xl">
+            &
+          </span>
+          Steve
+        </h1>
+
+        <div className="mx-auto my-8 h-px w-16 bg-champagne/70" />
+
+        <p className="font-display text-xl italic text-white/90 sm:text-3xl">
+          Our forever begins here.
+        </p>
+
+        <p className="mt-5 text-[10px] uppercase tracking-[0.3em] text-champagne sm:text-xs">
+          #TheEgogoLoveStory
+        </p>
+
+        {/* Wedding date */}
+        <div className="mx-auto mt-9 flex w-fit items-center justify-center gap-5 border-y border-white/25 py-4 sm:gap-8">
+          <div>
+            <p className="font-display text-xl sm:text-2xl">3rd April</p>
+            <p className="mt-1 text-[9px] uppercase tracking-[0.25em] text-white/60">
+              2027
             </p>
-            <span className="h-px w-10 bg-champagne lg:hidden" />
           </div>
 
-          <h1 className="font-display text-[5.5rem] font-medium leading-[0.78] tracking-[-0.04em] sm:text-[7rem] lg:text-[9.5rem]">
-            Miracle
-            <span className="block pl-10 text-champagne lg:pl-16">&</span>
-            <span className="block">Steve</span>
-          </h1>
+          <span className="h-10 w-px bg-champagne/60" />
 
-          <div className="mt-8">
-            <p className="font-display text-2xl italic text-brown/65 sm:text-3xl">
-              Our forever begins here.
+          <div>
+            <p className="font-display text-xl sm:text-2xl">Lagos</p>
+            <p className="mt-1 text-[9px] uppercase tracking-[0.25em] text-white/60">
+              Nigeria
             </p>
-
-            <p className="mt-4 text-xs uppercase tracking-[0.3em] text-burgundy">
-              #TheEgogoLoveStory
-            </p>
-          </div>
-
-          {/* Wedding date */}
-          <div className="mx-auto mt-9 flex w-fit items-center gap-5 border-y border-brown/10 py-4 lg:mx-0">
-            <div className="text-center">
-              <p className="font-display text-2xl">3rd April</p>
-              <p className="text-[9px] uppercase tracking-[0.25em] text-brown/45">
-                2027
-              </p>
-            </div>
-
-            <span className="h-9 w-px bg-champagne/40" />
-
-            <div className="text-center">
-              <p className="font-display text-2xl">Lagos</p>
-              <p className="text-[9px] uppercase tracking-[0.25em] text-brown/45">
-                Nigeria
-              </p>
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="mt-10 flex flex-wrap justify-center gap-3 lg:justify-start">
-            <a
-              href="#rsvp"
-              className="rounded-full bg-brown px-8 py-4 text-xs uppercase tracking-[0.2em] text-white transition hover:bg-burgundy"
-            >
-              RSVP
-            </a>
-
-            <a
-              href="#wedding"
-              className="rounded-full border border-brown/20 px-8 py-4 text-xs uppercase tracking-[0.2em] transition hover:border-champagne hover:text-burgundy"
-            >
-              Explore Wedding
-            </a>
           </div>
         </div>
 
-        {/* RIGHT IMAGE AREA */}
-        <div className="relative mx-auto w-full max-w-142.5">
-          <div className="absolute -right-3 -top-3 h-full w-full border border-champagne/30" />
+        {/* Actions */}
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <a
+            href="#rsvp"
+            className="border border-champagne bg-champagne px-8 py-4 text-[10px] uppercase tracking-[0.25em] text-burgundy transition hover:border-white hover:bg-white"
+          >
+            RSVP
+          </a>
 
-          <div className="relative aspect-4/5 overflow-hidden bg-brown/10">
-            {/* Replace this background with your actual pre-wedding image later */}
-            <div className="absolute inset-0 bg-linear-to-b from-champagne/25 via-ivory to-brown/15" />
-
-            <div className="relative flex h-full flex-col items-center justify-center px-8 text-center">
-              <span className="font-display text-[7rem] leading-none text-champagne/45 sm:text-[9rem]">
-                M<span className="text-burgundy/45"> & </span>S
-              </span>
-
-              <div className="mt-8 h-px w-16 bg-champagne/50" />
-
-              <p className="mt-6 font-display text-3xl italic text-brown/45">
-                Our photo goes here
-              </p>
-
-              <p className="mt-2 text-[9px] uppercase tracking-[0.3em] text-brown/30">
-                Pre-wedding photograph
-              </p>
-            </div>
-          </div>
-
-          {/* Floating note */}
-          <div className="absolute -bottom-7 -left-5 hidden max-w-57.5 border border-champagne/30 bg-ivory px-7 py-5 shadow-xl sm:block">
-            <p className="font-display text-xl italic leading-6">
-              "Two hearts,
-              <br />
-              one beautiful journey."
-            </p>
-          </div>
-
-          {/* Number */}
-          <div className="absolute -right-6 bottom-8 hidden sm:block">
-            <p className="font-display text-6xl text-champagne/30">01</p>
-          </div>
+          <a
+            href="#wedding"
+            className="border border-white/50 bg-burgundy/20 px-8 py-4 text-[10px] uppercase tracking-[0.25em] text-white backdrop-blur-sm transition hover:border-champagne hover:text-champagne"
+          >
+            Explore Wedding
+          </a>
         </div>
+
+        <p className="mt-12 text-[9px] uppercase tracking-[0.3em] text-white/55">
+          A love story written by grace
+        </p>
       </div>
 
       {/* Scroll indicator */}
       <a
         href="#our-story"
-        className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[9px] uppercase tracking-[0.3em] text-brown/35 sm:flex"
+        aria-label="Scroll to our story"
+        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-3 text-[9px] uppercase tracking-[0.3em] text-white/65 sm:flex"
       >
         <span>Scroll to explore</span>
-        <span className="h-10 w-px bg-champagne/50" />
+        <span className="h-9 w-px bg-champagne/70" />
       </a>
     </section>
   );
