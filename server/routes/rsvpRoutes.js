@@ -24,9 +24,9 @@ router.get("/", authMiddleware, async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { name, phone, email, attendance, guests, event, message } = req.body;
+    const { name, phone, email, attendance, event, message } = req.body;
 
-    if (!name || !phone || !attendance || !guests || !event) {
+    if (!name?.trim() || !phone?.trim() || !attendance || !event) {
       return res.status(400).json({
         success: false,
         message: "Please fill in all required fields.",
@@ -34,24 +34,23 @@ router.post("/", async (req, res) => {
     }
 
     const rsvp = await RSVP.create({
-      name,
-      phone,
+      name: name.trim(),
+      phone: phone.trim(),
       email,
       attendance,
-      guests,
       event,
       message,
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "RSVP submitted successfully.",
       data: rsvp,
     });
   } catch (error) {
-    console.error(error);
+    console.error("RSVP submission error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Something went wrong while submitting your RSVP.",
     });
