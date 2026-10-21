@@ -49,7 +49,7 @@ const gifts = [
     description:
       "A spacious double-door refrigerator to keep our groceries fresh and our kitchen well stocked.",
 
-    amount: 238680,
+    amount: 1200000,
 
     image: "/images/registry/refrigerator.jpeg",
 
@@ -66,7 +66,7 @@ const gifts = [
     description:
       "A 4K smart television for enjoying movies, entertainment, and relaxing evenings at home.",
 
-    amount: 512500,
+    amount: 730000,
 
     image: "/images/registry/television.jpeg",
 
@@ -108,40 +108,6 @@ const gifts = [
   },
 
   {
-    id: "dinner-set",
-
-    title: "16 Pieces Ceramic Dinner Set (Plates, Cups, Bowls)",
-
-    category: "Home & Bedding",
-
-    description:
-      "A coordinated ceramic dinner set for sharing meals and creating beautiful table settings.",
-
-    amount: 49850,
-
-    image: "/images/registry/dinner-set.jpeg",
-
-    quantityNeeded: 1,
-  },
-
-  {
-    id: "plate-rack",
-
-    title: "Stainless Steel Kitchen Plate Rack Organizer",
-
-    category: "Kitchen & Dining",
-
-    description:
-      "A practical stainless steel rack to keep plates and kitchen essentials neat and organized.",
-
-    amount: 48999,
-
-    image: "/images/registry/plate-rack.jpeg",
-
-    quantityNeeded: 1,
-  },
-
-  {
     id: "bedsheet",
 
     title: "Luxury Egyptian Cotton Bed Sheet Set",
@@ -154,23 +120,6 @@ const gifts = [
     amount: 14950,
 
     image: "/images/registry/bedsheet.jpeg",
-
-    quantityNeeded: 1,
-  },
-
-  {
-    id: "toyota-rav4",
-
-    title: "Toyota RAV4 (2014 Model SUV)",
-
-    category: "Milestone Gift",
-
-    description:
-      "A special milestone contribution toward our dream family SUV.",
-
-    amount: 10500000,
-
-    image: "/images/registry/toyota-rav4.jpeg",
 
     quantityNeeded: 1,
   },
@@ -202,7 +151,7 @@ const gifts = [
     description:
       "Extra freezer space for preserving food and keeping household essentials stocked.",
 
-    amount: 255320,
+    amount: 555320,
 
     image: "/images/registry/chest-freezer.jpeg",
 
@@ -219,7 +168,7 @@ const gifts = [
     description:
       "An energy-saving dual inverter air conditioner for comfortable indoor living.",
 
-    amount: 368600,
+    amount: 470600,
 
     image: "/images/registry/air-conditioner.jpeg",
 
@@ -237,7 +186,7 @@ const gifts = [
     description:
       "A multifunction stainless steel oven for air frying, baking, and preparing a variety of meals.",
 
-    amount: 245000,
+    amount: 320000,
 
     image: "/images/registry/air-fryer-oven.jpeg",
 
@@ -308,40 +257,6 @@ const gifts = [
     amount: 650000,
 
     image: "/images/registry/starlink.jpeg",
-
-    quantityNeeded: 1,
-  },
-
-  {
-    id: "cutlery",
-
-    title: "Elegant 24-Piece Cutlery Set",
-
-    category: "Kitchen & Dining",
-
-    description:
-      "An elegant cutlery collection for everyday dining and special occasions.",
-
-    amount: 18000,
-
-    image: "/images/registry/cutlery.jpeg",
-
-    quantityNeeded: 1,
-  },
-
-  {
-    id: "knife-set",
-
-    title: "Premium Kitchen Knife Set",
-
-    category: "Kitchen & Dining",
-
-    description:
-      "A premium set of kitchen knives for efficient meal preparation.",
-
-    amount: 16500,
-
-    image: "/images/registry/knife-set.jpeg",
 
     quantityNeeded: 1,
   },
