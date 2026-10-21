@@ -9,6 +9,7 @@ const MIN_OUR_HOME_AMOUNT = 50000;
 
 // Trusted registry catalogue.
 // These prices must match GiftRegistry.jsx.
+
 const REGISTRY_ITEMS = {
   "pressure-cooker": {
     title: "Silver Crest 10-in-1 Electric Pressure Cooker",
@@ -20,11 +21,11 @@ const REGISTRY_ITEMS = {
   },
   refrigerator: {
     title: "Double Door Home Refrigerator",
-    amount: 238680,
+    amount: 1200000,
   },
   television: {
     title: "Hisense 4K Smart UHD Television",
-    amount: 512500,
+    amount: 730000,
   },
   "air-fryer": {
     title: "Digital XL Rapid Air Fryer",
@@ -34,21 +35,9 @@ const REGISTRY_ITEMS = {
     title: "Electric Cold-Press Juice Extractor",
     amount: 33516,
   },
-  "dinner-set": {
-    title: "16 Pieces Ceramic Dinner Set (Plates, Cups, Bowls)",
-    amount: 49850,
-  },
-  "plate-rack": {
-    title: "Stainless Steel Kitchen Plate Rack Organizer",
-    amount: 48999,
-  },
   bedsheet: {
     title: "Luxury Egyptian Cotton Bed Sheet Set",
     amount: 14950,
-  },
-  "toyota-rav4": {
-    title: "Toyota RAV4 (2014 Model SUV)",
-    amount: 10500000,
   },
   "washing-machine": {
     title: "Automatic Front-Load Washing Machine",
@@ -56,16 +45,16 @@ const REGISTRY_ITEMS = {
   },
   "chest-freezer": {
     title: "Deep Chest Freezer",
-    amount: 255320,
+    amount: 555320,
   },
   "air-conditioner": {
     title: "Hisense 1.5HP GenCool Dual Inverter Air Conditioner",
-    amount: 368600,
+    amount: 470600,
   },
   "air-fryer-oven": {
     title:
       "Sedar 24L All Stainless Steel French Door Multifunction Air Fryer Oven + 1 Enamel Bake Tray",
-    amount: 245000,
+    amount: 320000,
   },
   "glass-bowls": {
     title: "12 Piece Set of High Borosilicate Glass Bowls",
@@ -82,14 +71,6 @@ const REGISTRY_ITEMS = {
   starlink: {
     title: "Starlink High-Speed Internet Setup",
     amount: 650000,
-  },
-  cutlery: {
-    title: "Elegant 24-Piece Cutlery Set",
-    amount: 18000,
-  },
-  "knife-set": {
-    title: "Premium Kitchen Knife Set",
-    amount: 16500,
   },
   "mug-set": {
     title: "Ceramic Mug Set",
@@ -138,6 +119,10 @@ const REGISTRY_ITEMS = {
   "ergonomic-chair": {
     title: "Generic Moq Ergonomic Swivel Mesh High Back Chair With Headrest",
     amount: 116800,
+  },
+  "our-home": {
+    title: "Our Home",
+    amount: null,
   },
 };
 
