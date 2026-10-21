@@ -26,13 +26,6 @@ const rsvpSchema = new mongoose.Schema(
       required: true,
     },
 
-    guests: {
-      type: Number,
-      required: true,
-      min: 1,
-      max: 10,
-    },
-
     event: {
       type: String,
       enum: ["traditional", "church", "reception", "all"],
