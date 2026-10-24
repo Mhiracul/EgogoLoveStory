@@ -1,7 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import envelopeImage from "../assets/ms-envelope.png";
+import openingVideo from "../assets/videos/ms.mp4";
 
 export default function WeddingEntrance({ onOpen, onComplete }) {
-  const [opening, setOpening] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+
+  const videoRef = useRef(null);
+  const completedRef = useRef(false);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -11,91 +17,92 @@ export default function WeddingEntrance({ onOpen, onComplete }) {
     };
   }, []);
 
+  const finishOpening = () => {
+    if (completedRef.current) return;
+
+    completedRef.current = true;
+    document.body.style.overflow = "";
+    onComplete?.();
+  };
+
   const handleOpen = async () => {
-    if (opening) return;
+    if (playing || completedRef.current) return;
 
-    setOpening(true);
+    // Reveal the video immediately after the seal is clicked.
+    setPlaying(true);
 
-    // Start music from the user's tap
-    await onOpen?.();
+    // Start the wedding background music separately.
+    try {
+      await onOpen?.();
+    } catch (error) {
+      console.error("Could not start wedding music:", error);
+    }
 
-    // Give the full opening animation time to finish
-    setTimeout(() => {
-      document.body.style.overflow = "";
-      onComplete?.();
-    }, 7000);
+    // Play the envelope animation with its sound muted.
+    try {
+      if (videoRef.current) {
+        videoRef.current.muted = true;
+        await videoRef.current.play();
+      }
+    } catch (error) {
+      console.error("Could not play the opening animation:", error);
+      setVideoError(true);
+    }
   };
 
   return (
     <section
       className={`wedding-entrance ${
-        opening ? "wedding-entrance--opening" : ""
+        playing ? "wedding-entrance--opening" : ""
       }`}
     >
-      <div className="envelope-scene">
-        {/* INVITATION CARD INSIDE ENVELOPE */}
-        <div className="invitation-card">
-          <div className="invitation-card__inner">
-            <div className="invitation-top-line">WITH JOY IN OUR HEARTS</div>
+      {!playing && (
+        <div className="envelope-scene">
+          <img
+            src={envelopeImage}
+            alt="Miracle and Steve's wedding envelope"
+            className="envelope-image"
+            draggable="false"
+          />
 
-            <p className="invitation-kicker">YOU ARE CORDIALLY INVITED</p>
+          <button
+            type="button"
+            className="envelope-image-trigger"
+            onClick={handleOpen}
+            aria-label="Open the wedding invitation"
+          />
 
-            <h1 className="invitation-names">
-              <span>Miracle</span>
-              <small>&</small>
-              <span>Steve</span>
-            </h1>
-
-            <div className="invitation-divider">
-              <span />
-              <b>✦</b>
-              <span />
-            </div>
-
-            <p className="invitation-title">THE EGOGO LOVE STORY</p>
-
-            <p className="invitation-date">APRIL 2027</p>
-
-            <p className="invitation-message">
-              Two hearts, one beautiful story, and a lifetime to begin.
-            </p>
+          <div className="tap-to-open">
+            <span>Tap to open</span>
+            <i />
           </div>
         </div>
+      )}
 
-        {/* ENVELOPE BACK */}
-        <div className="envelope-back" />
+      {playing && !videoError && (
+        <video
+          ref={videoRef}
+          className="envelope-opening-video"
+          src={openingVideo}
+          autoPlay
+          muted
+          playsInline
+          controls={false}
+          disablePictureInPicture
+          preload="auto"
+          onEnded={finishOpening}
+          onError={() => setVideoError(true)}
+        />
+      )}
 
-        {/* LOWER ENVELOPE POCKET */}
-        <div className="envelope-front" />
-
-        {/* TOP FLAP */}
-        <div className="envelope-flap" />
-
-        {/* GOLD INNER EDGE */}
-        <div className="envelope-gold-edge" />
-
-        {/* WAX SEAL */}
-        <button
-          className="wax-seal"
-          onClick={handleOpen}
-          aria-label="Open wedding invitation"
-        >
-          <span className="wax-seal__outer">
-            <span className="wax-seal__inner">
-              M <small>&</small> S
-            </span>
-          </span>
-        </button>
-
-        {/* TAP TEXT */}
-        <div className="tap-to-open">
-          <span>Tap to open</span>
-          <i />
+      {videoError && (
+        <div className="video-error">
+          <p>We couldn't play the invitation animation.</p>
+          <button type="button" onClick={finishOpening}>
+            Enter wedding website
+          </button>
         </div>
-
-        {/* OPENING OVERLAY */}
-        <div className="opening-glow" />
-      </div>
+      )}
     </section>
   );
 }

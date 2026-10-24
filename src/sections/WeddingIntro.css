@@ -1,0 +1,231 @@
+.wedding-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at center,
+    #fffaf1 0%,
+    #eee1d0 65%,
+    #d6c2a9 100%
+  );
+  perspective: 1600px;
+}
+
+.intro-glow {
+  position: absolute;
+  width: 75vw;
+  height: 75vw;
+  max-width: 700px;
+  max-height: 700px;
+  border-radius: 50%;
+  background: #fffdf7;
+  filter: blur(100px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.envelope-scene {
+  position: relative;
+  width: min(92vw, 460px);
+  aspect-ratio: 9 / 16;
+  max-height: 76vh;
+  isolation: isolate;
+  transform-style: preserve-3d;
+}
+
+.envelope-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 0 25px 75px #49301e30;
+  transition: opacity 700ms ease;
+}
+
+/*
+  This triangular flap overlays the upper envelope.
+  Its top edge acts as the hinge.
+*/
+.envelope-flap {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: linear-gradient(145deg, #fffaf1 0%, #f5ecde 48%, #e9dbc7 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 48%);
+  transform-origin: 50% 0%;
+  backface-visibility: visible;
+  filter: drop-shadow(0 5px 4px #51341e20);
+  pointer-events: none;
+}
+
+.seal-trigger {
+  position: absolute;
+  z-index: 5;
+  top: 49%;
+  left: 50%;
+  width: 38%;
+  height: 17%;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.seal-trigger:focus-visible {
+  outline: 2px solid #9c713b;
+  outline-offset: 5px;
+}
+
+.seal-hint {
+  position: absolute;
+  top: 115%;
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
+  color: #79542e;
+  font-family: Georgia, serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  animation: hint-pulse 2s ease-in-out infinite;
+}
+
+.intro-footer {
+  position: absolute;
+  bottom: 3vh;
+  margin: 0;
+  color: #866c4f;
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-align: center;
+}
+
+.is-opening .envelope-art {
+  opacity: 0;
+  transition-delay: 250ms;
+}
+
+.is-opening .envelope-flap {
+  animation: envelope-flap-open 1.25s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes envelope-flap-open {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  100% {
+    transform: rotateX(-175deg);
+  }
+}
+
+@keyframes hint-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* The invitation emerges after the flap opens. */
+.revealed-invitation {
+  position: absolute;
+  z-index: 6;
+  inset: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 9%;
+  border: 1px solid #c4a46b;
+  background: radial-gradient(ellipse at top, #fffef9, #f6eddf 75%, #eadbc5);
+  box-shadow: 0 20px 65px #50321c35;
+  text-align: center;
+  animation: invitation-rise 1.2s cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.invitation-monogram {
+  color: #70202a;
+  font-family: Georgia, serif;
+  font-size: clamp(38px, 10vw, 64px);
+  letter-spacing: 0.03em;
+}
+
+.invitation-monogram i {
+  color: #b18b4d;
+  font-size: 0.7em;
+}
+
+.invitation-rule {
+  margin: 15px 0 30px;
+  color: #b18b4d;
+}
+
+.invitation-eyebrow {
+  color: #866c4f;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  line-height: 2;
+}
+
+.revealed-invitation h1 {
+  margin: 16px 0;
+  color: #651f29;
+  font-family: Georgia, serif;
+  font-size: clamp(27px, 7vw, 42px);
+  font-weight: 400;
+}
+
+.invitation-copy {
+  max-width: 260px;
+  color: #76624e;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.enter-wedding {
+  margin-top: 35px;
+  padding: 15px 18px;
+  border: 1px solid #8b2632;
+  background: #74232e;
+  color: #fff8ec;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  transition: background 250ms ease;
+}
+
+.enter-wedding:hover {
+  background: #4e141c;
+}
+
+@keyframes invitation-rise {
+  from {
+    opacity: 0;
+    transform: translateY(70px) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seal-hint,
+  .is-opening .envelope-flap,
+  .revealed-invitation {
+    animation-duration: 0.01ms;
+  }
+}

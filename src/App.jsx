@@ -69,7 +69,7 @@ function App() {
       )}
 
       {/* ACTUAL WEDDING WEBSITE */}
-      <div className="min-h-screen bg-ivory font-body text-brown">
+      <div className="min-h-screen w-full max-w-full overflow-x-clip bg-ivory font-body text-brown">
         <Navbar />
 
         <main>

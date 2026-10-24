@@ -2,7 +2,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen w-full  items-center justify-center overflow-hidden bg-burgundy text-white"
+      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-burgundy text-white"
     >
       {/* Full-screen background video */}
       <video
