@@ -147,7 +147,7 @@ export default function Gifts() {
       const paystack = new Paystack();
 
       paystack.newTransaction({
-        key: import.meta.env.PAYSTACK_PUBLIC_KEY,
+        key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
         email: form.email.trim(),
         amount: totalAmount * 100,
         currency: "NGN",
